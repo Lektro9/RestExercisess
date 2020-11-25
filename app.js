@@ -2,11 +2,6 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger.json");
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 let persons = [
   { name: "James", age: "15", hobby: "soccer" },
   { name: "Jimmy", age: "19", hobby: "Video Games" },
@@ -17,13 +12,28 @@ app.get("/personen", (req, res) => {
   res.send(persons);
 });
 
-//post auf /addPerson um neue Person zu erstellen
+//TODO: GET auf /person?name=James um eine einzelne Person zu erhalten
+app.get("/path", (req, res) => {
+  //req.query.name um query parameter abzufragen
+  let person = getPerson("hierNameEinfügen");
+  //hier eine responds senden
+});
 
-app.post("/personen", (req, res) => {
-  req.body;
-  res.send(persons);
+//TODO: POST auf /addPerson um neue Person zu erstellen
+app.post("/path", (req, res) => {
+  //req.body enthält die Informationen die mitgeschickt wurden
+  //nutze addPerson() um eine neue Person hinzuzufügen
+  res.send("geschafft!");
 });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+function getPerson(name) {
+  return persons.find((p) => p.name === name);
+}
+
+function addPerson(newPerson) {
+  persons.push(newPerson);
+}
